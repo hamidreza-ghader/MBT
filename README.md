@@ -13,7 +13,7 @@ With our model building tool you can do step 2 to 4 assuming that you already ha
 a sample calling of the script is as follows:
 
     ./build-models-from-wordAligned-bitext.pl --input-files-prefix=aligned 
-    --experiment-dir=./expdir  dependencies=./dependencies --f=chinese --e=english 
+    --experiment-dir=./expdir  --dependencies=./dependencies --f=chinese --e=english 
     --a=grow-diag-final --build-distortion-model --use-dlr  
     --moses-orientation  --build-phrase-table >& err.log
 

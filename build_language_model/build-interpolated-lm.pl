@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Getopt::Long "GetOptions";
 use File::Spec::Functions;
+use FindBin '$Bin';
 
 my $arg_string=join(' ',@ARGV);
 my $command=$0;
@@ -17,41 +18,14 @@ my $clean_up=1;
 # smt5:/glusterfs/volume0/christof/mt/buildpt/lm
 # /home/christof/code/oister/build/language_models/scripts/build-interpolated-lm.pl --input-corpora=1-1-1:kn:bitext.en,background.en --order=3 --lm=foo.lm --ext-path=/home/christof/code/oister/install/external_components/ --num-parallel=2 --ppl=/home/ilps/smt/data/translation_test/OpenMT/mt06gale/arabic-english/mt06gale.arabic-english.ref.tok.txt.0 --input-lms=/home/christof/ilps-christof/mt/experiments/german/test-dev/data/europarl.srilm --delete-builds
 
-BEGIN {
-    if(!defined($ENV{'OISTERHOME'})
-       || $ENV{'OISTERHOME'} eq '') {
-        print STDERR "environment variable OISTERHOME must be set:\n";
-        print STDERR "export OISTERHOME=/path/to/oister/distribution\n";
-        exit(-1);
-    }
-}
-
-BEGIN {
-    my $release_info=`cat /etc/*-release`;
-    $release_info=~s/\n/ /g;
-    my $os_release;
-    if($release_info=~/CentOS release 5\./) {
-        $os_release='CentOS_5';
-    } elsif($release_info=~/CentOS release 6\./) {
-        $os_release='CentOS_6';
-    }
-    if($os_release eq 'CentOS_6') {
-        unshift @INC, $ENV{"OISTERHOME"}."/lib/perl_modules/lib64/perl5"
-    } else {
-        unshift @INC, $ENV{"OISTERHOME"}."/resources/bin/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi"
-    }
-}
-
 use PerlIO::gzip;
-
-my $OISTERHOME=$ENV{'OISTERHOME'};
 
 my $_HELP;
 my $corpora_tuples_list;
 my $lm_file;
 my $lm_list;
 my $batch_size=1000000;
-my $external_path;
+my $srilm_path;
 my $min_counts_string='1-1-1-2-2';
 my $order=5;
 my $smoothing='kndiscount';
@@ -69,7 +43,7 @@ $_HELP = 1
   "input-corpora=s" => \$corpora_tuples_list,
   "input-lms=s" => \$lm_list,
   "batch-size|b=i" => \$batch_size,
-  "external-path|ext-path=s" => \$external_path,
+  "srilm-path=s" => \$srilm_path,
   "lm=s" => \$lm_file,
   "num-parallel=i" => \$num_parallel,
   "binary-lm|bin-lm" => \$binary_lm,
@@ -89,8 +63,8 @@ if(!defined($corpora_tuples_list) && !defined($lm_list)) {
     $_HELP=1;
 }
     
-if(!defined($external_path)) {
-    print STDERR "  --external-path=str must be set\n";
+if(!defined($srilm_path)) {
+    print STDERR "  --srilm-path=str must be set\n";
     $_HELP=1;
 }
    
@@ -119,11 +93,15 @@ if(defined($lm_file) && -e "$lm_file") {
     exit(-1);
 }
 
-my $srilm_bin="$external_path/external_binaries/srilm/";
-my $srilm_bin_machinetype="$external_path/external_binaries/srilm/bin_machine_type";
+#my $srilm_bin="$external_path/external_binaries/srilm/";
+#my $srilm_bin_machinetype="$external_path/external_binaries/srilm/bin_machine_type";
+
+my $srilm_bin="$srilm_path/bin/";
+my $srilm_machine_type_bin=&get_srilm_bin_machine_type_dir($srilm_path);
+my $srilm_machine_type_bin_path="$srilm_path/bin/$srilm_machine_type_bin";
 
 my $PATH=$ENV{'PATH'};
-$ENV{'PATH'}="$PATH:$srilm_bin:$srilm_bin_machinetype";
+$ENV{'PATH'}="$PATH:$srilm_bin:$srilm_machine_type_bin_path";
 #print STDERR "ENV{'PATH'}=$ENV{'PATH'}\n";
 
 my @jobs_tbd;
@@ -175,7 +153,7 @@ for(my $i=0; $i<@corpora_tuples; $i++) {
     }
 
     my $build_dir="$current_dir/build\_$job_counter";
-    my $job_call="mkdir $build_dir\; cd $build_dir\; nohup sh -c \'$OISTERHOME/build/language_models/scripts/build-large-lm.pl --text=$text_file --lm=$corpus_lm_file --smoothing=$smoothing_lm --order=$order --ext-path=$external_path --keep-files 2> $current_dir/err.job.$job_counter.log\; sleep 10\; touch $current_dir/finished.$job_counter\' >& /dev/null \&";
+    my $job_call="mkdir $build_dir\; cd $build_dir\; nohup sh -c \'$Bin/./build-large-lm.pl --text=$text_file --lm=$corpus_lm_file --smoothing=$smoothing_lm --order=$order --srilm-path=$srilm_path --keep-files 2> $current_dir/err.job.$job_counter.log\; sleep 10\; touch $current_dir/finished.$job_counter\' >& /dev/null \&";
     push(@jobs_tbd,$job_call);
     $job_counter++;
 }
@@ -280,16 +258,16 @@ if(defined($ppl_file)) {
 	}
 	undef @parts;
 	if(exists($flags{'lc'})) {
-	    push(@parts,"$OISTERHOME/build/language_models/scripts/lowercase.pl");
+	    push(@parts,"$Bin/./lowercase.pl");
 	}
 	if(exists($flags{'numsub'})) {
-	    push(@parts,"$OISTERHOME/build/language_models/scripts/substitute_numbers.pl");
+	    push(@parts,"$Bin/./substitute_numbers.pl");
 	}
 	if(exists($flags{'dedupl'})) {
 	    push(@parts,"sort -u -T $working_dir");
 	}
 	if(exists($flags{'sent_tags'})) {
-	    push(@parts,"$OISTERHOME/build/language_models/scripts/add_sent_tags.pl");
+	    push(@parts,"$Bin/./add_sent_tags.pl");
 	}
 	$preprocessing_pipeline=join(" \| ",@parts);
 	$preprocessing_pipeline="\| $preprocessing_pipeline";
@@ -313,6 +291,7 @@ for(my $i=0; $i<@lms; $i++) {
 if(defined($ppl_file)) {
     my @ppl_files;
     for(my $i=0; $i<@lms; $i++) {
+        print $lms[$i];
 	my $ppl_call="ngram -order $order -debug 2 -lm $lms[$i] -ppl $ppl_file 1> $current_dir/ppl/$ppl_file_name.$i.ppl";
 	print STDERR "$ppl_call\n";
 	system($ppl_call);
@@ -445,6 +424,36 @@ sub round_off {
     return $rounded_num;
 }
 
+sub get_srilm_bin_machine_type_dir {
+    my($srilm_path)=@_;
+    my $common_dir="$srilm_path/common";
+    print STDERR "common_dir=$common_dir\n";
+    my %srilm_machine_types;
+    opendir(D,"$common_dir");
+    while(defined(my $makefile=readdir(D))) {
+        if($makefile=~/^Makefile\.machine\.(.+)$/) {
+            my $machine_type=$1;
+            $srilm_machine_types{$machine_type}=1;
+        }
+    }
+    closedir(D);
+
+    my $machine_type_bin_dir;
+    foreach my $machine_type (keys %srilm_machine_types) {
+        if(-e "$srilm_path/bin/$machine_type" && -d "$srilm_path/bin/$machine_type") {
+           $machine_type_bin_dir="$srilm_path/bin/$machine_type";
+           $machine_type_bin_dir=$machine_type;
+           last;
+           }
+         if(-e "$srilm_path/bin/$machine_type\_c" && -d "$srilm_path/bin/$machine_type\_c") {
+              $machine_type_bin_dir="$machine_type\_c";
+              last;
+         }
+     }
+
+     return $machine_type_bin_dir;
+} 
+
 sub print_help {
    print "\nOptions:
   --input-corpora=str : comma-separated list of input files
@@ -459,7 +468,7 @@ sub print_help {
          This dependes on the size of the corpora. It's recommended
          to keep this value <5.
   --external-path=str : path to 3rd party software directory
-         generated by $OISTERHOME/install/scripts/oister-link-external-components.pl
+         generated by /install/scripts/oister-link-external-components.pl
   --batch-size=int : number of sentences per batch (default=1000000)
   --pre-processing=str : comma-separated values={lc,numsub,dedupl,sent_tags}
                  default=lc,numsub,dedupl,sent_tags

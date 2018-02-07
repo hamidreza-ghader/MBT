@@ -77,6 +77,8 @@ my $srilm_bin="$srilm_path/bin/";
 my $srilm_machine_type_bin=&get_srilm_bin_machine_type_dir($srilm_path);
 my $srilm_machine_type_bin_path="$srilm_path/bin/$srilm_machine_type_bin";
 
+print $srilm_machine_type_bin;
+
 my $PATH=$ENV{'PATH'};
 $ENV{'PATH'}="$PATH:$srilm_bin:$srilm_machine_type_bin_path";
 print STDERR "ENV{'PATH'}=$ENV{'PATH'}\n";
@@ -89,7 +91,7 @@ if($no_interpolation) {
     $interpolation="";
 }
 
-my $srilm_parameters="-order $order $interpolation $smoother $gtmins $binary_flag";
+my $srilm_parameters="-order $order $interpolation $smoother $gtmins";
 $srilm_parameters=~s/ +/ /g;
 $srilm_parameters=~s/^ +//;
 $srilm_parameters=~s/ +$//;

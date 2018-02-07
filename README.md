@@ -105,36 +105,47 @@ a sample calling of the script is as follows:
 Detailed arguments are explained as follows : 
 
 * --text
+
   Specifies the input text file. Input file should contain the sentences one per line.
 
 * --lm
+
   Specifies the name of the output file.
 
 * --srilm-path
+
   Specifies the path to srilm top level installation directory
 
 * --order
+
   Specifies the n-gram order of the language model requied. For example, --order=5 specifies a 5-gram language model. (default=5)
 
 * --working-dir
+
   This tools creates multiple temporary files while building the langauge model. This option specifies the path to a directory where these temporary files should be stored. The tool deletes the file after the language model is built. (default=working_dir. If no value is provided a temporay directory is built where the script is called)
 
 * --keep-files
+
   Specifies temporary log files not to be deleted. By default, this tool deletes temporary log files. If you need them for debugging purposes, provide this flag.
 
 * --smoothing
+
   Smoothing or discounting techniques are used while building language model to account for sparse or rare n-grams. This tool provides two smoothing/discounting techniques. 1. Kneser-Ney smoothing : specified as --smoothing=kneser-ney or --smoothing=kneser-ney=kndiscount 2. Witten-bell smoothing : specified as --smoothing=wbdiscount or --smoothing=-wbdiscount. (default=kndiscount) 
 
 * --no-interpolation
+
   Specifies no interpolation of the discounted n-gram probability estimates with lower-order estimates. By default, this tool provides for such an interpolation (This sometimes yields better models with some smoothing methods).
 
 * --min-counts
+
   Sets the minimal count of N-grams of order n that will be included in the LM. All N-grams with frequency lower than that will effectively be discounted to 0. For example, --min-counts=2-2-2-2-2, specifies that for a LM of order 5, the minimum frequency of all n-grams of size 5 or lesser should be 2. Any n-gram with value less that 2 will be considered non-existent. (default=1-1-1-2-2)
 
 * --batch_size
+
   Specifies number of sentences per batch to be processed. This tool splits the input text in batches and finally combines output of each batch in a single language model. A higher batch size results in higher parallelization and hence builds the LM faster. However, it increases the memory requirement. A lower batch size requires low memory, however, splits data in less number of batches and hence results in slow speed. (default=1000000). Reduce the number of batches if you have memory limitations. 
 
 * --pre-processing
+
   Specifies different pre-processing options to be applied to the input text before building language model. For example, --pre-processing=lc specifies that text should be converted to lowercase.  This tool by default provides 4 pre-processing operations :     
   1. --pre-processing=lc : All the letters in the text to be lowercased
   2. --pre-processing=numsub : All number should be transliterated. For example '11' should be converted to 'eleven'

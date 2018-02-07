@@ -176,7 +176,7 @@ for(my $i=0; $i<@misc_corpora; $i++) {
 
 
 my $external_path = defined($dependencies_path) ? $dependencies_path : "./dependencies";
-my $moses_train_script="./dependencies/moses/scripts/training/train-model.perl";
+my $moses_train_script="$dependencies_path/moses/scripts/training/train-model.perl";
 
 my $call_lex_prob="$moses_train_script --root-dir=$experiment_dir/lex_trans --external-bin-dir=$external_path/external_binaries --corpus=$experiment_dir/lex_trans/corpus/lex_aligned --f=$f_suffix --e=$e_suffix --first-step=4 --last-step=4 --alignment=grow-diag-final >& $experiment_dir/err.lex_prob.log";
 print STDERR "$call_lex_prob\n";

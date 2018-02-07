@@ -8,7 +8,7 @@ Modern SMT systems typically depend on three kinds of models: a language model, 
 
 With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by a single script.
     
-    script/training/modelBuilding/build-models-from-wordAligned-bitext.pl
+    build-models-from-wordAligned-bitext.pl
     
 a sample calling of the script is as follows:
 

@@ -28,9 +28,10 @@ After installation, copy the aforementioned binary files from Moses installation
 
     [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/moses/bin/
 
-Now the tool can be used by calling it using the command given in the example above.
-    
-a sample calling of the script is as follows:
+Now the tool can be used by calling it using the command given in the example below.
+
+## How to Use
+A sample calling of the script is as follows:
 
     ./build-models-from-wordAligned-bitext.pl --input-files-prefix=aligned 
     --experiment-dir=./expdir  --dependencies=./dependencies --f=chinese --e=english 

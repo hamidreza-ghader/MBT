@@ -1,0 +1,198 @@
+=head2 Tue Jun  4 09:52:37 2013: C<Module> L<Time::HiRes|Time::HiRes>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister/lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.9725>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Jun  4 10:04:17 2013: C<Module> L<PerlIO::gzip|PerlIO::gzip>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister/lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.18>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Jun  4 10:08:42 2013: C<Module> L<Devel::Size|Devel::Size>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister//lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 0.79>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Tue Jun  4 15:54:18 2013: C<Module> L<XML::Twig|XML::Twig>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister/lib/perl_modules/share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.44>
+
+=item *
+
+C<EXE_FILES: tools/xml_pp/xml_pp tools/xml_grep/xml_grep tools/xml_split/xml_split tools/xml_merge/xml_merge tools/xml_spellcheck/xml_spellcheck>
+
+=back
+
+=head2 Tue Jun  4 16:09:39 2013: C<Module> L<XML::Twig|XML::Twig>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister/lib/perl_modules/share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 3.44>
+
+=item *
+
+C<EXE_FILES: tools/xml_pp/xml_pp tools/xml_grep/xml_grep tools/xml_split/xml_split tools/xml_merge/xml_merge tools/xml_spellcheck/xml_spellcheck>
+
+=back
+
+=head2 Fri Jul 19 17:27:27 2013: C<Module> L<ExtUtils::MakeMaker|ExtUtils::MakeMaker>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister//lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 6.68>
+
+=item *
+
+C<EXE_FILES: bin/instmodsh>
+
+=back
+
+=head2 Fri Jul 19 17:36:51 2013: C<Module> L<Class::Inspector|Class::Inspector>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister//lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.28>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Jul 19 17:42:42 2013: C<Module> L<File::ShareDir|File::ShareDir>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister//lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.03>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+
+=head2 Fri Jul 19 17:44:51 2013: C<Module> L<Lingua::Sentence|Lingua::Sentence>
+
+=over 4
+
+=item *
+
+C<installed into: /home/christof/code/oister//lib/perl_modules//share/perl5>
+
+=item *
+
+C<LINKTYPE: dynamic>
+
+=item *
+
+C<VERSION: 1.04>
+
+=item *
+
+C<EXE_FILES: >
+
+=back
+

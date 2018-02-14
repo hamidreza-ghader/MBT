@@ -9,6 +9,26 @@ Modern SMT systems typically depend on three kinds of models: a language model, 
 With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by a single script.
     
     build-models-from-wordAligned-bitext.pl
+
+## Installation
+
+There is no need to install the model building tool itself. It works right after cloning from the repository. However, the dependencies should be addressed beforehand. 
+
+### Dependecies
+
+This model building tool has dependencies to three binary files from [Moses](http://www.statmt.org/moses/?n=Moses.Releases) translation system. These files include:
+
+* consolidate
+* extract
+* score
+
+In order to meet the dependencies, first install Moses translation tool following the [installation instructions](http://www.statmt.org/moses/?n=Moses.Releases). 
+
+After installation, copy the aforementioned binary files from Moses installation directory to the following path:
+
+    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/moses/bin/
+
+Now the tool can be used by calling it using the command given in the example above.
     
 a sample calling of the script is as follows:
 
@@ -67,26 +87,6 @@ The word translation models.
 * `phrase-table.gz` 
 
 The translation model.
-
-## Installation
-
-There is no need to install the model building tool itself. It works right after cloning from the repository. However, the dependencies should be addressed beforehand. 
-
-### Dependecies
-
-This model building tool has dependencies to three binary files from [Moses](http://www.statmt.org/moses/?n=Moses.Releases) translation system. These files include:
-
-* consolidate
-* extract
-* score
-
-In order to meet the dependencies, first install Moses translation tool following the [installation instructions](http://www.statmt.org/moses/?n=Moses.Releases). 
-
-After installation, copy the aforementioned binary files from Moses installation directory to the following path:
-
-    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/moses/bin/
-
-Now the tool can be used by calling it using the command given in the example above.
 
 # Building Language Model
 With our model building tool, you can easily build large language model from simple text. This tool provide easy inegration with the well known languge model engine SRILM.

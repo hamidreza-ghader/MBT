@@ -1,0 +1,31 @@
+perl Makefile.PL PREFIX=$OISTERHOME/lib/perl_modules/
+make
+make test
+make install
+
+Time-HiRes
+http://search.cpan.org/~zefram/Time-HiRes-1.9725/
+
+PerlIO-gzip
+http://search.cpan.org/~nwclark/PerlIO-gzip-0.18/
+
+Devel-Size
+http://search.cpan.org/~nwclark/Devel-Size-0.79/
+
+XML-Parser
+http://search.cpan.org/~toddr/XML-Parser-2.41/
+
+XML-Twig
+http://search.cpan.org/~mirod/XML-Twig-3.44/
+
+ExtUtils-MakeMaker
+http://search.cpan.org/~bingos/ExtUtils-MakeMaker-6.68/
+
+Lingua-Sentence
+http://search.cpan.org/~achimru/Lingua-Sentence/
+
+File-ShareDir
+http://search.cpan.org/~adamk/File-ShareDir-1.03/
+
+Class-Inspector
+http://search.cpan.org/~adamk/Class-Inspector-1.28/

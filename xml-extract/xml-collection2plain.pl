@@ -10,7 +10,7 @@ use FindBin '$Bin';
 
 my $pid=$$;
 my @doc_info_tags=qw( date language categories source genre);
-
+#test
 =begin COMMENTS
 BEGIN {
     if(!defined($ENV{'OISTERHOME'})

@@ -1,15 +1,38 @@
-# Model Building from Bitext
-### Introduction
+# Bitext Models
+## Introduction
 Modern SMT systems typically depend on three kinds of models: a language model, a translation model (aka phrase table), and lexicalized reodering model (aka lexicalized distortion model). The latter two require a parallel corpus (aka bitext) to be built. Building those bitext models requires a number of steps:
 * Word Alignment: Here word-to-word (but not necessarily one-to-one) links are learned for each parallel sentence pair in the the bitext.
 * Word Translation Models: Here models of the form p(w_f|w_e) and p(w_e|w_f) are learned, where w_e and w_f are words.
 * Lexicalized Reordering Models: These are models of the form p(Orientation|(p_f,p_e)) where Orientation={monotonic,swap,discontinuous}, where p_f and p_e are phrases.
 * Translation Models: These are models of the form p(p_f|p_e) and p(p_e|p_f) , where p_f and p_e are phrases.
 
+## Word Alignment
+
 With our word alignment tool you can do step 1. This is done by calling the following script. The details of the call is covered in the following sections.
 
     wordAlignment.pl
-    
+
+## Installation 
+
+The word alignment tool works right after being cloned. However, the dependecies should be addressed beforehand.
+
+## Dependencies
+
+Our word alignment tool has dependencies to some files from [MGIZA](https://github.com/moses-smt/mgiza/blob/master/mgizapp/INSTALL) installation. These files include:
+
+* mgiza
+* mkcls
+* snt2cooc
+* snt2coocrmp
+* merge_alignment.py
+
+In order to meet the dependencies, first install MGIZA tool following the [installation instructions](https://github.com/moses-smt/mgiza/blob/master/mgizapp/INSTALL). Then, please copy the mentioned files into the following path:
+
+    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/external_binaries
+
+
+## Translation and Reordering Models
+
 With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by a single script. The details of the call is covered in the following sections.
     
     build-models-from-wordAligned-bitext.pl

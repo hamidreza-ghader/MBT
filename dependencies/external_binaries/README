@@ -1,2 +1,8 @@
-Please copy the following binary files into this directory:
--
+Please copy the following files into this directory:
+- merge_alignment.py
+- mgiza
+- mkcls
+- snt2cooc
+- snt2coocrmp
+
+

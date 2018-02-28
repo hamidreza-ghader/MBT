@@ -5,7 +5,10 @@ Modern SMT systems typically depend on three kinds of models: a language model, 
 * Word Translation Models: Here models of the form p(w_f|w_e) and p(w_e|w_f) are learned, where w_e and w_f are words.
 * Lexicalized Reordering Models: These are models of the form p(Orientation|(p_f,p_e)) where Orientation={monotonic,swap,discontinuous}, where p_f and p_e are phrases.
 * Translation Models: These are models of the form p(p_f|p_e) and p(p_e|p_f) , where p_f and p_e are phrases.
+With our word alignment tool you can do step 1. This is done by calling the following script.
 
+    wordAlignment.pl
+    
 With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by a single script.
     
     build-models-from-wordAligned-bitext.pl

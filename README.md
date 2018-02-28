@@ -47,9 +47,7 @@ A sample calling of the script is as follows:
     [PATH-TO-MODEL-BUILDING-TOOL-HOME]/wordAlignment.pl 
     --dependencies=[PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies 
     --corpus=bitext --f=de --e=en --moses-params="--parallel" 
-    --alignment-strategies=m1-m5:grow-diag-final-and 
-    --lex-probs=m1-m5:grow-diag-final-and --no-batches=2 
-    --no-parallel=2 --mgiza >& err.log
+    --no-batches=2 --no-parallel=2 >& err.log
 
 
 * `--corpus`
@@ -71,15 +69,24 @@ Specifies the path to the dependencies folder where other scripts are located.
 
 * `--moses-params`
 
-* `--alignment-strategies`
-
-* `--lex-probs`
-
 * `--no-batches`
+
+Specifies the number of batches that the data is splitted to. The alignment is done independently for each batch. In order to get a good qulity alignment, please make sure that each batch includes almost 200K to 300K sentences. 
 
 * `--no-parallel`
 
-* `--mgiza`
+Specifies the maximum number of parallel runs.
+
+Running this command will result into creation of some directories including "models" directory in the directory from which you have run the script. If everything is okay, there will be three files created in the following path:
+
+    [PATH-TO-RUNNING_DIR]/models/model
+
+These files include:
+
+* Aligned source corpus
+* Aligned target corpus
+* Alignment file
+
 
 
 ## Translation and Reordering Models

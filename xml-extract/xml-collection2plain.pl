@@ -11,50 +11,11 @@ use FindBin '$Bin';
 my $pid=$$;
 my @doc_info_tags=qw( date language categories source genre);
 
-=begin COMMENTS
-BEGIN {
-    if(!defined($ENV{'OISTERHOME'})
-       || $ENV{'OISTERHOME'} eq '') {
-        print STDERR "environment variable OISTERHOME must be set:\n";
-        print STDERR "export OISTERHOME=/path/to/oister/distribution\n";
-        exit(-1);
-    }
-}
-
-
-BEGIN {
-    my $release_info=`cat /etc/*-release`;
-    $release_info=~s/\n/ /g;
-    my $os_release;
-    if($release_info=~/CentOS release 5\./) {
-        $os_release='CentOS_5';
-    } elsif($release_info=~/CentOS release 6\./) {
-        $os_release='CentOS_6';
-    }
-    if($os_release eq 'CentOS_6') {
-        unshift @INC, $ENV{"OISTERHOME"}."/lib/perl_modules/lib64/perl5";
-        unshift @INC, $ENV{"OISTERHOME"}."/lib/perl_modules/share/perl5"
-    } else {
-        unshift @INC, $ENV{"OISTERHOME"}."/resources/bin/lib64/perl5/site_perl/5.8.8/x86_64-linux-thread-multi"
-    }
-}
-=end COMMENTS
-=cut
-
-BEGIN {
-unshift @INC, "./perl_modules/lib64/perl5";
-unshift @INC, "./perl_modules/share/perl5";
-}
 use PerlIO::gzip;
-use Lingua::Sentence;
 
 my %lingua_sentence_splitters;
-$lingua_sentence_splitters{'english'}=Lingua::Sentence->new("en");
 
-
-#my $OISTERHOME=$ENV{'OISTERHOME'};
-
-my $lang_string='all';
+my $lang_string='english';
 my $sentence_split=1;
 my $write_stdout=0;
 my $exclude_dates_string='';
@@ -72,8 +33,6 @@ $_HELP = 1
         "xml-input=s" => \$xml_input_string,
         "output-file=s" => \$output_file,
         "output-dir=s" => \$output_dir,
-        "directory-per-language" => \$dir_per_lang,
-        "languages=s" => \$lang_string,
         "exclude-dates=s" => \$exclude_dates_string,
         "constrain-dates=s" => \$include_dates_string,
         "no-sentence-splitting" => \$no_sentence_split,
@@ -102,10 +61,7 @@ if ($_HELP) {
   --xml-input=str : comma-separated list of xml files
   --output-file=str : one file containing all data
   --output-dir=str : one directory in which documents are stored as files
-  --directory-per-language : creates separates directories for each
-             language under --output-dir
-  --languages=str : str=lang1,lang2,lang3 (list of languages, default=all)
-  --sentence-split=[0,1] (split sentences, default: 1)
+  --no-sentence-splitting : do not split sentences, default: 1
   --exclude-dates=yyyy-mm-dd,yyyy-mm,yyyy,...
   --constrain-dates=yyyy-mm-dd,yyyy-mm,yyyy,...
   --help : print this message.\n\n";
@@ -566,16 +522,7 @@ sub map_language {
 
 
 sub sentence_splitter_pipeline {
-    my($language)=@_;
-
-    if($language=~/^(arabic)$/) {
-	return "\| $Bin/./sentence-splitter-arabic.pl";
-    } 
-    elsif($language=~/^(persian|farsi|kurdish|pastho)$/) {
-	return "\| $Bin/./sentence-splitter-arabic-persian-scripts.pl";
-    } else {
 	return "\| $Bin/./sentence-splitter-foreign-no-uppercase.pl";	
-    }
 }
 
 sub read_doc_info {

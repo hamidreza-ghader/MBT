@@ -16,7 +16,7 @@ With our word alignment tool you can do step 1. This is done by calling the foll
 
 The word alignment tool works right after being cloned. However, the dependecies should be addressed beforehand.
 
-## Dependencies
+### Dependencies
 
 Our word alignment tool has dependencies to some files from [MGIZA](https://github.com/moses-smt/mgiza/blob/master/mgizapp/INSTALL) installation. These files include:
 
@@ -26,9 +26,42 @@ Our word alignment tool has dependencies to some files from [MGIZA](https://gith
 * snt2coocrmp
 * merge_alignment.py
 
-In order to meet the dependencies, first install MGIZA tool following the [installation instructions](https://github.com/moses-smt/mgiza/blob/master/mgizapp/INSTALL). Then, please copy the mentioned files into the following path:
+and 
+
+* symal
+
+In order to meet the dependencies, first install MGIZA tool following the [installation instructions](https://github.com/moses-smt/mgiza/blob/master/mgizapp/INSTALL). Then, please copy the first 5 files into the following path:
 
     [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/external_binaries
+    
+and the "symal" file to the following:
+
+    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies/moses/bin/
+    
+Now the tool can be used by calling it using the command given in the example below.
+
+## How to Use
+
+A sample calling of the script is as follows:
+
+    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/wordAlignment.pl --dependencies=[PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies 
+    --corpus=bitext --f=de --e=en --moses-params="--parallel" --alignment-strategies=m1-m5:grow-diag-final-and 
+    --lex-probs=m1-m5:grow-diag-final-and --no-batches=2 --no-parallel=2 --mgiza >& err.log
+
+
+* `--corpus`
+
+Specifies the shared prefix of the names of source and target files. This means that these two input files should have shared prefix in their names. For example 
+`bitext.de` and `bitext.en`
+
+* `--f`
+
+Specifies the suffix of the input source file. For example, `--f=de` if the source file name is like `[FILENAME].de`
+
+* `--e`
+
+Specifies the suffix of the input target file. For example, `--e=en` if the target file name is like `[FILENAME].en`
+
 
 
 ## Translation and Reordering Models
@@ -67,7 +100,7 @@ A sample calling of the script is as follows:
 
 * `--input-files-prefix`
 
-Specifies the shared prefix of the names of source, target and alignment files. This means that these three input files should have shared prefix in their names. For examples 
+Specifies the shared prefix of the names of source, target and alignment files. This means that these three input files should have shared prefix in their names. For example 
 `aligned.chinese`, `aligned.english` and `aligned.grow-diag-final`.
 
 * `--f`

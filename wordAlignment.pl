@@ -67,11 +67,11 @@ my $add_background;
 my $f_suffix;
 my $e_suffix;
 my $experiment_dir;
-my $use_mgiza=0;
+my $use_mgiza=1;
 my $build_phrase_table=0;
 my $build_distortion_model=0;
 my $alignment_strategies='m1-m5:grow-diag-final-and';
-my $lex_probs;
+my $lex_probs = 'm1-m5:grow-diag-final-and';
 my $dm_interpolation=0.75;
 #my $block_count=0;
 my $sigtest_filter='a+e';
@@ -122,21 +122,21 @@ $_HELP = 1
 	"f=s" => \$f_suffix,
 	"e=s" => \$e_suffix,
 	"corpus=s" => \$corpus_stem,
-	"pos-corpus=s" => \$pos_corpus_stem,
-	"align-corpus=s" => \$align_corpus_stem,
-	"background-corpus=s" => \$background_corpus_stem,
-	"pos-background-corpus=s" => \$pos_background_corpus_stem,
-	"align-background-corpus=s" => \$align_background_corpus_stem,
-        "mgiza" => \$use_mgiza,
-	"dict=s" => \$dict_stem,
-	"pos-dict=s" => \$pos_dict_stem,
-	"align-dict=s" => \$align_dict_stem,
-        "add-background=i" => \$add_background_num,
-        "add-dict=i" => \$add_dict_num,
-        "duplicate-background=i" => \$duplicate_background_num,
-        "duplicate-dict=i" => \$duplicate_dict_num,
-	"misc-corpus=s" => \$misc_corpus_string,
-	"misc-background-corpus=s" => \$misc_background_corpus_string,
+#	"pos-corpus=s" => \$pos_corpus_stem,
+#	"align-corpus=s" => \$align_corpus_stem,
+#	"background-corpus=s" => \$background_corpus_stem,
+#	"pos-background-corpus=s" => \$pos_background_corpus_stem,
+#	"align-background-corpus=s" => \$align_background_corpus_stem,
+#        "mgiza" => \$use_mgiza,
+#	"dict=s" => \$dict_stem,
+#	"pos-dict=s" => \$pos_dict_stem,
+#	"align-dict=s" => \$align_dict_stem,
+#        "add-background=i" => \$add_background_num,
+#        "add-dict=i" => \$add_dict_num,
+#        "duplicate-background=i" => \$duplicate_background_num,
+#        "duplicate-dict=i" => \$duplicate_dict_num,
+#	"misc-corpus=s" => \$misc_corpus_string,
+#	"misc-background-corpus=s" => \$misc_background_corpus_string,
 #
 #
 #	"corpus-stem=s" => \$corpus_stem,
@@ -149,30 +149,30 @@ $_HELP = 1
 #	"add-background" => \$add_background,
 	"no-batches=i" => \$num_batches,
 	"no-parallel=i" => \$no_parallel,
-        "compressed-sort" => \$compressed_sort,
+#        "compressed-sort" => \$compressed_sort,
 	"moses-params=s" => \$additional_moses_parameters,
-	"experiment-dir=s" => \$experiment_dir,
-	"build-phrase-table" => \$build_phrase_table,
-	"build-distortion-model" => \$build_distortion_model,
-	"dm-lang=s" => \$dm_languages,
-	"moses-orientation" => \$use_moses_orientation,
-	"use-dlr" => \$use_dlr,
-	"use-hdm|use-hrm" => \$use_hdm,
-	"delete-function-links" => \$delete_function_links,
-	"distortion-model-interpolation=s" => \$dm_interpolation,
-	"alignment-strategies=s" => \$alignment_strategies,
-	"lex-probs=s" => \$lex_probs,
-	"sigtest-filter=s" => \$sigtest_filter,
-        "skip-align" => \$skip_align,
-        "sparse-features=s" => \$sparse_feature_options,
-        "pt-smoothing|phrase-table-smoothing=s" => \$phrase_table_smoothing_string,
-        "lex-weights=s" => \$lexical_weighting_string,
-        "num-ibm1-iterations=i" => \$num_ibm1_iterations,
-        "pos-trans=s" =>\$pos_trans_string,
-        "bilm=s" => \$bilm_string,
-        "berkeley-em-threads|em-threads=i" => \$berkeley_em_threads,
-        "tmpfs|tempfs" => \$use_tmpfs,
-        "tmpfs-loc|tempfs-loc=s" => \$tmpfs_loc,
+#	"experiment-dir=s" => \$experiment_dir,
+#	"build-phrase-table" => \$build_phrase_table,
+#	"build-distortion-model" => \$build_distortion_model,
+#	"dm-lang=s" => \$dm_languages,
+#	"moses-orientation" => \$use_moses_orientation,
+#	"use-dlr" => \$use_dlr,
+#	"use-hdm|use-hrm" => \$use_hdm,
+#	"delete-function-links" => \$delete_function_links,
+#	"distortion-model-interpolation=s" => \$dm_interpolation,
+#	"alignment-strategies=s" => \$alignment_strategies,
+#	"lex-probs=s" => \$lex_probs,
+#	"sigtest-filter=s" => \$sigtest_filter,
+#       "skip-align" => \$skip_align,
+#        "sparse-features=s" => \$sparse_feature_options,
+#        "pt-smoothing|phrase-table-smoothing=s" => \$phrase_table_smoothing_string,
+#        "lex-weights=s" => \$lexical_weighting_string,
+#        "num-ibm1-iterations=i" => \$num_ibm1_iterations,
+#        "pos-trans=s" =>\$pos_trans_string,
+#        "bilm=s" => \$bilm_string,
+#        "berkeley-em-threads|em-threads=i" => \$berkeley_em_threads,
+#        "tmpfs|tempfs" => \$use_tmpfs,
+#        "tmpfs-loc|tempfs-loc=s" => \$tmpfs_loc,
 	"ignore-alignment-errorlog|ignore-alignment-error-log" => \$ignore_word_alignment_errorlog,
     "dependencies=s" => \$dependencies_path,
 	"help|h" => \$_HELP,
@@ -213,33 +213,9 @@ if($_HELP) {
     print "\nOptions:
   --f : foreign-side suffix (e.g., 'ar', 'fr', ...)
   --e : target-side suffix (e.g., 'en', 'de', ...)
-  --corpus-stem : stem of the bitext
-  --bitext-pos-f=str :
-  --background-corpus-stem : background corpus added to each batch (optional)
-  --dict-stem : stem of the dict bitext (optional)
-  --add-dict: add the dictionary to aligned output (default=1)
-  --add-background: add background corpus to aligned output (default=0)
-  --compressed-sort : use compressed (gzipped) version of sort (default=0)
-  --mgiza : use mgiza
-  --alignment-strategies : list of aligners/refiners
-  --lex-probs : list of aligners/refiners for lex.f2n/n2f
   --no-batches: number of splits (default=1)
   --no-parallel : maximum number of parallel runs (default=1)
   --moses-params : additional optional moses training parameters
-  --moses-orientation : use moses orientation counts
-  --use-dlr (use discontinous left+right)
-  --use-hdm (use hierarchical distortion modeling)
-  --dm-lang=string ('fe,f,e' or 'fe,e' or 'fe'=default)
-  --delete-function-links : delete non-1-1 function word alignments
-  --skip-align : skip the word alignment steps
-  --sparse-features : string includes --word-pairs --freq-bins --insert-trg --phrase-length
-  --lex-weights=str: comma-separated
-                 ( values: noisy-or-ibm1 noisy-or-rf ibm1-ibm1 ibm1-rf)
-  --num-ibm1-iterations=int : number of iterations of IBM1 (default=5)
-  --pt-smoothing=str : comma-separated string (values: kn gt elf)
-  --pos-trans=str : comma-separated values={pos-pos,lex-pos,length-pos}
-  --bilm=str : comma-separated values={w-w,p-p,p-w,p-w,w-x,p-x}
-  --berkeley-em-threads : number of cores used by Berkeley aligner
   --tmpfs : use tmpfs
   --tmpfs-loc=str : tmpfs path (default=/dev/shm/)
   --ignore-alignment-errorlog : all GIZA++/BerkelyAligner errors are written to /dev/null

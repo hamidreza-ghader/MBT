@@ -44,9 +44,12 @@ Now the tool can be used by calling it using the command given in the example be
 
 A sample calling of the script is as follows:
 
-    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/wordAlignment.pl --dependencies=[PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies 
-    --corpus=bitext --f=de --e=en --moses-params="--parallel" --alignment-strategies=m1-m5:grow-diag-final-and 
-    --lex-probs=m1-m5:grow-diag-final-and --no-batches=2 --no-parallel=2 --mgiza >& err.log
+    [PATH-TO-MODEL-BUILDING-TOOL-HOME]/wordAlignment.pl 
+    --dependencies=[PATH-TO-MODEL-BUILDING-TOOL-HOME]/dependencies 
+    --corpus=bitext --f=de --e=en --moses-params="--parallel" 
+    --alignment-strategies=m1-m5:grow-diag-final-and 
+    --lex-probs=m1-m5:grow-diag-final-and --no-batches=2 
+    --no-parallel=2 --mgiza >& err.log
 
 
 * `--corpus`
@@ -62,6 +65,21 @@ Specifies the suffix of the input source file. For example, `--f=de` if the sour
 
 Specifies the suffix of the input target file. For example, `--e=en` if the target file name is like `[FILENAME].en`
 
+* `--dependencies`
+
+Specifies the path to the dependencies folder where other scripts are located. 
+
+* `--moses-params`
+
+* `--alignment-strategies`
+
+* `--lex-probs`
+
+* `--no-batches`
+
+* `--no-parallel`
+
+* `--mgiza`
 
 
 ## Translation and Reordering Models

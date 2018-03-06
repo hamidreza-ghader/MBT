@@ -91,9 +91,11 @@ These files include:
 
 ## Translation and Reordering Models
 
-With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by a single script. The details of the call is covered in the following sections.
+With our model building tool you can do step 2 to 4 assuming that you already have a word aligned parallel corpus in hand. All these steps can be done by the following script. 
     
     build-models-from-wordAligned-bitext.pl
+    
+The details of the call is covered in the following sections.
 
 ## Installation
 

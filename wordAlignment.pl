@@ -91,7 +91,7 @@ my $bilm_string;
 #my $delete_function_links_script="$OISTERHOME/build/bitext_models/scripts/delete-function-word-alignment.pl";
 
 my $berkeley_em_threads=12;
-my $additional_moses_parameters;
+my $additional_moses_parameters = "--parallel";
 my $_HELP;
 my $delete_function_links=0;
 my $skip_align=0;
@@ -150,7 +150,7 @@ $_HELP = 1
 	"no-batches=i" => \$num_batches,
 	"no-parallel=i" => \$no_parallel,
 #        "compressed-sort" => \$compressed_sort,
-	"moses-params=s" => \$additional_moses_parameters,
+#	"moses-params=s" => \$additional_moses_parameters,
 #	"experiment-dir=s" => \$experiment_dir,
 #	"build-phrase-table" => \$build_phrase_table,
 #	"build-distortion-model" => \$build_distortion_model,
@@ -215,12 +215,12 @@ if($_HELP) {
   --e : target-side suffix (e.g., 'en', 'de', ...)
   --no-batches: number of splits (default=1)
   --no-parallel : maximum number of parallel runs (default=1)
-  --moses-params : additional optional moses training parameters
   --tmpfs : use tmpfs
   --tmpfs-loc=str : tmpfs path (default=/dev/shm/)
   --ignore-alignment-errorlog : all GIZA++/BerkelyAligner errors are written to /dev/null
   --dependencies=string (path to dependencies folder)
   --help : print this message.\n\n";
+# --moses-params : additional optional moses training parameters
     exit(-1);
 }
 
@@ -485,11 +485,11 @@ for(my $i=0; $i<100; $i++) {
     my $batch_dir="align_batch.$batch_id";
     if(-e "$batch_dir") {
 	print STDERR "rm -rf $batch_dir\n";
-	system("rm -rf $batch_dir");
+#	system("rm -rf $batch_dir"); HAMID
     }
     if(-e "$batch_id.finished") {
 	print STDERR "rm -f $batch_id.finished\n";
-	system("rm -f $batch_id.finished");
+#	system("rm -f $batch_id.finished"); HAMID
     }
 }
 
@@ -642,7 +642,7 @@ if(!$skip_align) {
 	# clean up and creation of merged dirs:
 	if(-e "$experiment_dir/align.$aligner/align_all") {
 	    print STDERR "rm -rf $experiment_dir/align.$aligner/align_all\n";
-	    system("rm -rf $experiment_dir/align.$aligner/align_all");
+#	    system("rm -rf $experiment_dir/align.$aligner/align_all"); HAMID
 	}
 	print STDERR "mkdir $experiment_dir/align.$aligner/align_all\n";
 	system("mkdir $experiment_dir/align.$aligner/align_all");
@@ -728,7 +728,7 @@ if(!$skip_align) {
 #end of skip align:
 
     if($use_tmpfs && $clean_up) {
-	system("rm -rf $tmpfs_loc/$tmp_align_dir");
+#	system("rm -rf $tmpfs_loc/$tmp_align_dir"); HAMID
     }
 
 }
@@ -829,7 +829,7 @@ if($clean_up) {
 	    my $batch_dir="$experiment_dir/align.$aligner/align_batch.$batch_id";
 	    if(-e "$batch_dir") {
 		print STDERR "rm -rf $batch_dir\n";
-		system("rm -rf $batch_dir");
+#		system("rm -rf $batch_dir");HAMID
 	    }
 	}
     }
@@ -940,7 +940,7 @@ system("cp $experiment_dir/lex_trans/corpus/lex_aligned.$e_suffix $experiment_di
 
 if($clean_up) {
     print STDERR "rm -rf $experiment_dir/lex_trans\n";
-    system("rm -rf $experiment_dir/lex_trans");
+#    system("rm -rf $experiment_dir/lex_trans");HAMID
 }
 
 

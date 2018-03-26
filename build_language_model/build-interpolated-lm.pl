@@ -106,6 +106,7 @@ $ENV{'PATH'}="$PATH:$srilm_bin:$srilm_machine_type_bin_path";
 
 my @jobs_tbd;
 my $job_counter=0;
+if(defined($corpora_tuples_list)){
 my(@corpora_tuples)=split(/\,/,$corpora_tuples_list);
 for(my $i=0; $i<@corpora_tuples; $i++) {
     my $min_counts;
@@ -158,6 +159,7 @@ for(my $i=0; $i<@corpora_tuples; $i++) {
     $job_counter++;
 }
 
+}
 if(defined($ppl_file) && -e "$current_dir/ppl") {
     print STDERR "Error: $current_dir/ppl exists. Please remove.\n";
     exit(-1);
@@ -292,6 +294,7 @@ if(defined($ppl_file)) {
     my @ppl_files;
     for(my $i=0; $i<@lms; $i++) {
         print $lms[$i];
+        print STDERR $lms[$i];
 	my $ppl_call="ngram -order $order -debug 2 -lm $lms[$i] -ppl $ppl_file 1> $current_dir/ppl/$ppl_file_name.$i.ppl";
 	print STDERR "$ppl_call\n";
 	system($ppl_call);
